@@ -15,6 +15,8 @@ npm install hapi-peel
 ```
 
 ## API
+The only special behavior that exists if if you choose not to pass in a callback to `Peel.create`,
+which will auto start the Hapi server. Otherwise you have full control over when the server starts.
 
 ```js
 var Peel = require('hapi-peel');
