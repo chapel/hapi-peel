@@ -30,6 +30,8 @@ exports.create = function create(pluginModule, config, callback) {
 
     if (callback) {
       callback(err, server);
+    } else if (server) {
+      server.start();
     }
   }
 
