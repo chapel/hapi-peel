@@ -1,0 +1,30 @@
+{
+  "name": "hapi-peel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chapel/hapi-peel.git"
+  },
+  "keywords": [
+    "hapi"
+  ],
+  "author": "Jacob Chapel <jacob.chapel@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chapel/hapi-peel/issues"
+  },
+  "homepage": "https://github.com/chapel/hapi-peel",
+  "dependencies": {
+    "hapi": "^7.2.0",
+    "hoek": "^2.8.1"
+  },
+  "devDependencies": {
+    "chai": "^1.9.2",
+    "lab": "^5.0.1"
+  }
+}
