@@ -21,12 +21,12 @@ describe('Peel', function () {
 
   var hapiStart;
   beforeEach(function (done) {
-    hapiStart = Hapi.Pack.prototype.start;
+    hapiStart = Hapi.Server.prototype.start;
     done();
   });
 
   afterEach(function (done) {
-    Hapi.Pack.prototype.start = hapiStart;
+    Hapi.Server.prototype.start = hapiStart;
     done();
   });
 
@@ -57,7 +57,7 @@ describe('Peel', function () {
       exports: required
     };
 
-    Hapi.Pack.prototype.start = function () {
+    Hapi.Server.prototype.start = function () {
       throw new Error('start should not be called');
     };
 
@@ -76,7 +76,7 @@ describe('Peel', function () {
     };
 
     // If not called, test will time out and fail
-    Hapi.Pack.prototype.start = function () {
+    Hapi.Server.prototype.start = function () {
       done();
     };
 

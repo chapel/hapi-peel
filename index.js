@@ -5,9 +5,14 @@ var Hoek = require('hoek');
 function createServer(plugin, config, callback) {
   var Hapi = require('hapi');
 
-  var server = Hapi.createServer(config.host, config.port, config.options);
+  var server = new Hapi.Server(config.options);
 
-  server.pack.register(plugin, function (err) {
+  server.connection({
+    host: config.host,
+    port: config.port
+  });
+
+  server.register(plugin, function (err) {
     if (err) {
       return callback(err);
     }
