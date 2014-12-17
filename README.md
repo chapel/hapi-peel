@@ -15,7 +15,7 @@ npm install hapi-peel
 ```
 
 ## API
-The only special behavior that exists if if you choose not to pass in a callback to `Peel.create`,
+The only special behavior that exists is if you choose not to pass in a callback to `Peel.create`,
 which will auto start the Hapi server. Otherwise you have full control over when the server starts.
 
 ```js
@@ -38,6 +38,23 @@ Creates Hapi server if not required, otherwise calls back with no server.
  * host - optional
  * port - optional
  * config - optional
+
+`callback` can be an optional function with arguments `callback(err, server)`. The callback will be invoked after the plugin is registered.
+
+Alternatively `callback` can be an object denoting various callbacks to be invoked during the plugin register life cycle. In the second case the format will be:
+
+```
+var callbackObj = {
+    pre: function (server, next) { ... },
+    post: function (err, server) { ... }
+};
+...
+Peel.create(module, config, callbackObj);
+```
+
+The `post` callback will be treated the same way as the `callback` passed to Peel in the functional form.
+
+The `pre` callback will have access to the Hapi server before the plugin is registered. To continue the registration process the given `next` callback should be invoked.
 
 ### License
 MIT
