@@ -83,6 +83,92 @@ describe('Peel', function () {
     Peel.create(fakeModule, config);
   });
 
+  describe('callback is a set of pre- and post- register callbacks', function () {
+    var fakeModule = {
+      parent: null,
+      exports: required
+    };
+    var callbackObj;
+    var overriddenRegister;
+    var registerCalled = false;
+
+    beforeEach(function (done) {
+      callbackObj = {};
+      overriddenRegister = required.register;
+      required.register = function (plugin, options, next) {
+        registerCalled = true;
+        next();
+      };
+      required.register.attributes = overriddenRegister.attributes;
+
+      done();
+    });
+
+    afterEach(function (done) {
+      callbackObj = null;
+      required.register = overriddenRegister;
+      registerCalled = false;
+
+      done();
+    });
+
+    it('should call pre() at the appropriate point', function (done) {
+      var preCalled = false;
+
+      callbackObj.pre = function (server, next) {
+        preCalled = true;
+
+        expect(server).to.exist;
+        expect(registerCalled).to.be.false;
+
+        next();
+      };
+
+      Hapi.Server.prototype.start = function () {
+        expect(preCalled).to.be.true;
+
+        done();
+      };
+
+      Peel.create(fakeModule, config, callbackObj);
+    });
+
+    it('should call post() at the appropriate point', function (done) {
+      callbackObj.post = function (err, server) {
+        expect(err).to.not.exist;
+        expect(server).to.exist;
+        expect(registerCalled).to.be.true;
+
+        done();
+      };
+
+      Peel.create(fakeModule, config, callbackObj);
+    });
+
+    it('should call pre() and post() callbacks at the appropriate point', function (done) {
+      var preCalled = false;
+
+      callbackObj.pre = function (server, next) {
+        preCalled = true;
+
+        expect(server).to.exist;
+        expect(registerCalled).to.be.false;
+
+        next();
+      };
+      callbackObj.post = function (err, server) {
+        expect(err).to.not.exist;
+        expect(server).to.exist;
+        expect(preCalled).to.be.true;
+        expect(registerCalled).to.be.true;
+
+        done();
+      };
+
+      Peel.create(fakeModule, config, callbackObj);
+    });
+  });
+
   it('should throw if module is not passed', function (done) {
     function shouldThrow() {
       Peel.create({}, {});

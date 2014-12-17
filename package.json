@@ -25,6 +25,8 @@
   },
   "devDependencies": {
     "chai": "^1.9.2",
-    "lab": "^5.0.1"
+    "lab": "^5.0.1",
+    "good-console": "^3.0.2",
+    "good": "^5.0.0"
   }
 }
