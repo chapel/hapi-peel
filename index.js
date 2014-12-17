@@ -12,7 +12,11 @@ function createServer(plugin, config, preRegisterCallback, callback) {
     port: config.port
   });
 
-  var afterPreRegister = function () {
+  var afterPreRegister = function (err) {
+    if (err) {
+      return callback(err);
+    }
+
     server.register(plugin, function (err) {
       if (err) {
         return callback(err);

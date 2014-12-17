@@ -169,20 +169,6 @@ describe('Peel', function () {
     });
   });
 
-  it('should auto start if no callback is given and required', function (done) {
-    var fakeModule = {
-      parent: null,
-      exports: required
-    };
-
-    // If not called, test will time out and fail
-    Hapi.Server.prototype.start = function () {
-      done();
-    };
-
-    Peel.create(fakeModule, config);
-  });
-
   it('should throw if module is not passed', function (done) {
     function shouldThrow() {
       Peel.create({}, {});
